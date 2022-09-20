@@ -4,7 +4,7 @@ import '../../models/cart_item.dart';
 
 import '../../models/order_item.dart';
 
-class OrderManager with ChangeNotifier {
+class OrdersManager with ChangeNotifier {
   final List<OrderItem> _orders = [
     OrderItem(
       id: 'o1',

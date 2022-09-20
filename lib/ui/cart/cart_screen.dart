@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/models/cart_item.dart';
 
 import 'cart_manager.dart';
 import 'cart_item_card.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
-  const CartScreen({superkey});
+
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCartSummary(cart, context) {
+  Widget buildCartSummary(CartManager cart, BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(15),
       child: Padding(

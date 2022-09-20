@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'ui/products/user_products_screen.dart';
 
 import 'ui/cart/cart_screen.dart';
 
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: 'Lato',
           colorScheme:
-          ColorScheme.fromSwatch(primarySwatch: Colors.purple).copyWith(
+              ColorScheme.fromSwatch(primarySwatch: Colors.purple).copyWith(
             secondary: Colors.deepOrange,
           )),
       home: const SafeArea(

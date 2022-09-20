@@ -64,7 +64,7 @@ class CartItemCard extends StatelessWidget {
           ),
           title: Text(cardItem.title),
           subtitle: Text('total: \$${(cardItem.price * cardItem.quantity)}'),
-          trailing: Text('${cardItem.quantity}'),
+          trailing: Text('${cardItem.quantity} x'),
         ),
       ),
     );

@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+
 import 'package:myshop/ui/cart/cart_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +46,6 @@ class CartItemCard extends StatelessWidget {
         context.read<CartManager>().removeItem(productId);
       },
       child: buildItemCard(),
-      
     );
   }
 

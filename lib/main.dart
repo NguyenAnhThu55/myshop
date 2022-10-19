@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'ui/screens.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,19 +14,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => ProductManager(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx)=>CartManager()
-        ),
-        ChangeNotifierProvider(
-          create: (ctx)=>OrdersManager()
-        ),
+        ChangeNotifierProvider(create: (ctx) => CartManager()),
+        ChangeNotifierProvider(create: (ctx) => OrdersManager()),
       ],
-      
       child: MaterialApp(
         title: 'My Shop',
         debugShowCheckedModeBanner: false,
@@ -47,17 +42,28 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(
               builder: (ctx) {
                 return ProductDetailScreen(
-                 ctx.read<ProductManager>().findById(productId),
+                  ctx.read<ProductManager>().findById(productId),
                 );
               },
             );
           }
+
+           if (settings.name ==EditProductScreen.routeName) {
+            final productId = settings.arguments as String?;
+            return MaterialPageRoute(
+              builder: (ctx) {
+                return EditProductScreen(
+                  productId != null
+                  ? ctx.read<ProductManager>().findById(productId): null,
+                );
+              },
+            );
+          }
+
           return null;
         },
       ),
-      
     );
-
   }
 }
 

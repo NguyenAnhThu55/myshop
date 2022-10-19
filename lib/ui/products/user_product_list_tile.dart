@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/ui/products/product_manager.dart';
+import 'package:myshop/ui/screens.dart';
 import 'package:provider/provider.dart';
 import '../../models/product.dart';
 
@@ -34,30 +35,32 @@ class UserProductListTile extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.edit),
       onPressed: () {
-        print('Go to Edit product screen');
+        Navigator.of(context).pushNamed(
+          EditProductScreen.routeName,
+          arguments: product.id,
+        );
       },
-      color:  Theme.of(context).primaryColor,
+      color: Theme.of(context).primaryColor,
     );
   }
-  
 
- Widget buildDeleteButton(BuildContext context) {
+  Widget buildDeleteButton(BuildContext context) {
     return IconButton(
-        icon: const Icon(Icons.delete),
-        onPressed: () {
-          context.read<ProductManager>().deleteProduct(product.id!);
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'Product delete',
-                  textAlign: TextAlign.center,
-                ),
+      icon: const Icon(Icons.delete),
+      onPressed: () {
+        context.read<ProductManager>().deleteProduct(product.id!);
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Product delete',
+                textAlign: TextAlign.center,
               ),
-            );
-          },
-          color: Theme.of(context).errorColor,
-        );
+            ),
+          );
+      },
+      color: Theme.of(context).errorColor,
+    );
   }
 }

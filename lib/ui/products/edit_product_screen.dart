@@ -33,6 +33,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _editForm = GlobalKey<FormState>();
   late Product _editedProduct;
   var _isLoading = false;
+
   bool _isValidImageUrl(String value) {
     return (value.startsWith('http') || value.startsWith("https")) &&
         (value.endsWith('.png') ||
@@ -41,19 +42,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   @override
-  void initState() {
-    _imageUrlFocusNode.addListener(() {
-      if (!_imageUrlFocusNode.hasFocus) {
-        if (!_isValidImageUrl(_imageUrlController.text)) {
-          return;
-        }
-        setState(() {});
-      }
-    });
-    _editedProduct = widget.product;
-    _imageUrlController.text = _editedProduct.imageUrl;
-    super.initState();
-  }
+  // void initState() {
+  //   _imageUrlFocusNode.addListener(() {
+  //     if (_imageUrlFocusNode.hasFocus){
+  //       if(!_isValidImageUrl(_imageUrlController.text)){
+  //         return;
+  //       }
+  //       setState(() {
+          
+  //       });
+  //     }   
+  //   });
+  //   _editedProduct = widget.product;
+  //   _imageUrlController.text =_editedProduct.imageUrl;
+  //   super.initState();
+  // }
 
   @override
   void dispose() {
@@ -186,31 +189,33 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   Widget buildProductPreview() {
+    var container2 = Container(
+      width: 100,
+      height: 100,
+      margin: const EdgeInsets.only(
+        top:8,
+        right: 10,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 1,
+          color: Colors.grey,
+        ),
+      ),
+      child: _imageUrlController.text.isEmpty
+          ? const Text('Enter a URL')
+          : FittedBox(
+              child: Image.network(
+                _imageUrlController.text,
+                fit: BoxFit.cover,
+              ),
+            ),
+    );
+    var container = container2;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        Container(
-          width: 100,
-          height: 100,
-          margin: const EdgeInsets.only(
-            top: 8,
-            right: 10,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: Colors.grey,
-            ),
-          ),
-          child: _imageUrlController.text.isEmpty
-              ? const Text('Enter a URL')
-              : FittedBox(
-                  child: Image.network(
-                    _imageUrlController.text,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-        ),
+        container,
         Expanded(
           child: buildImageURLField(),
         ),
@@ -241,5 +246,3 @@ class _EditProductScreenState extends State<EditProductScreen> {
     );
   }
 }
-
-

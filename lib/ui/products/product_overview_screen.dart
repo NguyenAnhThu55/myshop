@@ -22,7 +22,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchProducts = context.read<ProductManager>().fetchProducts();
+    _fetchProducts = context.read<ProductsManager>().fetchProducts();
   }
 
   @override
@@ -35,13 +35,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       drawer: const AppDrawer(),
       body: FutureBuilder(
         future: _fetchProducts,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return ValueListenableBuilder<bool>(
-                valueListenable: _showOnlyFavorites,
-                builder: (context, onlyFavorites, child) {
-                  return ProductsGrid(onlyFavorites);
-                });
+        builder:(context, snapshot){
+          if(snapshot.connectionState == ConnectionState.done){
+            return ValueListenableBuilder<bool>(valueListenable: _showOnlyFavorites , builder: (context, onlyFavorites, child){
+              return ProductsGrid(onlyFavorites);
+            });
           }
           return const Center(
             child: CircularProgressIndicator(),
@@ -96,3 +94,18 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     );
   }
 }
+
+// class _ProductsOverviewScreenState extends State<ProductsOverviewScreen>{
+//   final _showOnlyFavorites = ValueNotifier<bool>(false);
+//   late Future<void> _fetchProducts;
+
+//   @override 
+//   void initState(){
+//     super.initState();
+//     _fetchProducts = context.read<ProductsManager>().fetchProducts();
+//   }
+//   @override 
+//   Widget build(BuildContext context){
+
+//   }
+// }

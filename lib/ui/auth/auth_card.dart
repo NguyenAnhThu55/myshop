@@ -131,7 +131,9 @@ class _AuthCardState extends State<AuthCard> {
   }
 
   Widget _buildSubmitButton() {
-    var styleFrom = ElevatedButton.styleFrom(
+    return ElevatedButton(
+      onPressed: _submit,
+      style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -140,10 +142,7 @@ class _AuthCardState extends State<AuthCard> {
         textStyle: TextStyle(
           color: Theme.of(context).primaryTextTheme.headline6?.color,
         ),
-      );
-    return ElevatedButton(
-      onPressed: _submit,
-      style: styleFrom,
+      ),
       child: Text(_authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP'),
     );
   }

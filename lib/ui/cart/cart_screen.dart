@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/ui/orders/orders_manager.dart';
 import 'package:provider/provider.dart';
 
+import '../orders/order_manager.dart';
 import 'cart_manager.dart';
 import 'cart_item_card.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
-
   const CartScreen({super.key});
 
   @override
@@ -15,7 +14,7 @@ class CartScreen extends StatelessWidget {
     final cart = context.watch<CartManager>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('You Cart'),
+        title: const Text('Your Cart'),
       ),
       body: Column(
         children: <Widget>[
@@ -72,12 +71,13 @@ class CartScreen extends StatelessWidget {
                             cart.products,
                             cart.totalAmount,
                           );
+                      cart.clear();
                     },
               style: TextButton.styleFrom(
                 textStyle: TextStyle(color: Theme.of(context).primaryColor),
               ),
-              child: const Text('Order now'),
-            )
+              child: const Text('ORDER NOW'),
+            ),
           ],
         ),
       ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/ui/cart/cart_manager.dart';
+import 'package:flutter/widgets.dart';
+import 'package:myshop/ui/products/products_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/product.dart';
 
+import '../cart/cart_manager.dart';
 import 'product_detail_screen.dart';
-import '../shared/app_drawer.dart';
 
 class ProductGridTile extends StatelessWidget {
   const ProductGridTile(
@@ -13,6 +14,7 @@ class ProductGridTile extends StatelessWidget {
     super.key,
   });
   final Product product;
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -21,10 +23,8 @@ class ProductGridTile extends StatelessWidget {
         footer: buildGridFooterBar(context),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(
-              ProductDetailScreen.routeName,
-              arguments: product.id,
-            );
+            Navigator.of(context).pushNamed(ProductDetailScreen.routeName,
+                arguments: product.id);
           },
           child: Image.network(
             product.imageUrl,
@@ -38,13 +38,18 @@ class ProductGridTile extends StatelessWidget {
   Widget buildGridFooterBar(BuildContext context) {
     return GridTileBar(
       backgroundColor: Colors.black87,
-      leading: IconButton(
-        icon: Icon(
-          product.isFavorite ? Icons.favorite : Icons.favorite_border,
-        ),
-        color: Theme.of(context).colorScheme.secondary,
-        onPressed: () {
-          print('toggle a favorite product');
+      leading: ValueListenableBuilder<bool>(
+        valueListenable: product.isFavoriteListenable,
+        builder: (ctx, isFavorite, child) {
+          return IconButton(
+            icon: Icon(
+              product.isFavorite ? Icons.favorite : Icons.favorite_border,
+            ),
+            color: Theme.of(context).colorScheme.secondary,
+            onPressed: () {
+              ctx.read<ProductsManager>().toggleFavoriteStatus(product);
+            },
+          );
         },
       ),
       title: Text(
@@ -52,9 +57,7 @@ class ProductGridTile extends StatelessWidget {
         textAlign: TextAlign.center,
       ),
       trailing: IconButton(
-        icon: const Icon(
-          Icons.shopping_cart,
-        ),
+        icon: const Icon(Icons.shopping_cart),
         onPressed: () {
           final cart = context.read<CartManager>();
           cart.addItem(product);
@@ -67,7 +70,7 @@ class ProductGridTile extends StatelessWidget {
                 ),
                 duration: const Duration(seconds: 2),
                 action: SnackBarAction(
-                  label: "UNDO",
+                  label: 'UNDO',
                   onPressed: () {
                     cart.removeSingleItem(product.id!);
                   },

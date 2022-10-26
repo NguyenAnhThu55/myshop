@@ -8,11 +8,10 @@ class ProductDetailScreen extends StatelessWidget {
     this.product, {
     super.key,
   });
-
   final Product product;
 
-  @override
-  Widget build(BuildContext context) {
+  @override 
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title),
@@ -32,7 +31,7 @@ class ProductDetailScreen extends StatelessWidget {
             Text(
               '\$${product.price}',
               style: const TextStyle(
-                color: Colors.green,
+                color: Colors.grey,
                 fontSize: 20,
               ),
             ),
@@ -47,7 +46,7 @@ class ProductDetailScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),
-            )
+            ),
           ],
         ),
       ),

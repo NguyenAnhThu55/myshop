@@ -1,15 +1,11 @@
+import 'package:myshop/models/product.dart';
 import 'package:flutter/foundation.dart';
-import '../../models/product.dart';
 import '../../models/cart_item.dart';
+import '../../models/product.dart';
 
 class CartManager with ChangeNotifier {
   Map<String, CartItem> _items = {
-    'p1': CartItem(
-      id: 'c1',
-      title: 'Red Shirt',
-      price: 29.99,
-      quantity: 2,
-    ),
+    'p1': CartItem(id: 'c1', title: 'Red Shirt', quantity: 2, price: 29.99),
   };
 
   int get productCount {
@@ -29,55 +25,50 @@ class CartManager with ChangeNotifier {
     _items.forEach((key, cartItem) {
       total += cartItem.price * cartItem.quantity;
     });
-
     return total;
   }
 
   void addItem(Product product) {
     if (_items.containsKey(product.id)) {
-      // change quantity
       _items.update(
-          product.id!,
-          (existingCartItem) => existingCartItem.copyWith(
-                quantity: existingCartItem.quantity + 1,
-              ));
+        product.id!,
+        (existingCartItem) => existingCartItem.copyWith(
+          quantity: existingCartItem.quantity + 1,
+        ),
+      );
     } else {
       _items.putIfAbsent(
         product.id!,
         () => CartItem(
-          id: 'c${DateTime.now().toIso8601String()}',
-          title: product.title,
-          price: product.price,
-          quantity: 1,
-        ),
+            id: 'c${DateTime.now().toIso8601String()}',
+            title: product.title,
+            quantity: 1,
+            price: product.price),
       );
     }
     notifyListeners();
   }
-
-  void removeItem(String productId) {
+  void removeItem(String productId){
     _items.remove(productId);
     notifyListeners();
   }
-
-  void removeSingleItem(String productId) {
-    if (_items.containsKey(productId)) {
+  void removeSingleItem(String productId){
+    if(!_items.containsKey(productId)){
       return;
     }
-    if (_items[productId]?.quantity as num > 1) {
+    if(_items[productId]?.quantity as num>1){
       _items.update(
         productId,
         (existingCartItem) => existingCartItem.copyWith(
-          quantity: existingCartItem.quantity - 1,
+          quantity: existingCartItem.quantity -1,
         ),
       );
-    } else {
+    }else{
       _items.remove(productId);
     }
     notifyListeners();
   }
-
-  void clear() {
+  void clear(){
     _items = {};
     notifyListeners();
   }
